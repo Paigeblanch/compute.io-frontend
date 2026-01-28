@@ -1,0 +1,405 @@
+# Compute.io Deployment Guide
+## Quick Deploy with Base Crypto Payments
+
+This guide will help you integrate the new pages and deploy your API to production.
+
+---
+
+## 📦 What You Just Received
+
+I've created 6 files for you:
+
+1. **Terms.tsx** - Terms of Service page
+2. **Terms.css** - Styling for Terms page
+3. **Privacy.tsx** - Privacy Policy page
+4. **Privacy.css** - Styling for Privacy page
+5. **Pricing.tsx** - Pricing page with Base wallet integration
+6. **Pricing.css** - Styling for Pricing page
+
+---
+
+## 🚀 Step 1: Add Files to Your Replit Project
+
+### In your Replit project:
+
+1. Navigate to your `src` folder
+2. Create a `pages` folder if it doesn't exist: `src/pages/`
+3. Upload or copy these files:
+   ```
+   src/
+   ├── pages/
+   │   ├── Terms.tsx
+   │   ├── Terms.css
+   │   ├── Privacy.tsx
+   │   ├── Privacy.css
+   │   ├── Pricing.tsx
+   │   └── Pricing.css
+   ```
+
+---
+
+## 🔧 Step 2: Set Up Routing
+
+You'll need to add routes for these pages. Based on your Vite + React setup, you're likely using React Router.
+
+### Install React Router (if not already installed):
+```bash
+npm install react-router-dom
+```
+
+### Update your main App file (likely `src/App.tsx`):
+
+```typescript
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Pricing from './pages/Pricing';
+import Playground from './pages/Playground'; // Your existing playground
+import Dashboard from './pages/Dashboard'; // Your existing dashboard
+
+function App() {
+  return (
+    <Router>
+      <div className="app">
+        {/* Your existing nav/header */}
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/pricing">Pricing</Link>
+          <Link to="/playground">Playground</Link>
+          <Link to="/dashboard">Dashboard</Link>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/playground" element={<Playground />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+        </Routes>
+
+        {/* Footer with legal links */}
+        <footer>
+          <Link to="/terms">Terms of Service</Link>
+          <Link to="/privacy">Privacy Policy</Link>
+          <p>© 2025 Compute.io. All rights reserved.</p>
+        </footer>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+---
+
+## 🔐 Step 3: Fix the API Key in Playground
+
+In your existing Playground component, make sure the cURL example shows:
+
+```javascript
+-H "X-Payment-Token: YOUR_API_KEY_HERE" \
+```
+
+Instead of the real API key currently showing.
+
+---
+
+## 💰 Step 4: Implement Base Payment Backend
+
+The Pricing page has a basic wallet connection, but you need to complete the payment flow.
+
+### Option A: Manual Verification (Simplest)
+
+1. User connects wallet
+2. User sends USDC/ETH to your address
+3. They email you the transaction hash
+4. You verify on Basescan and manually activate their API key
+
+**Your Base Wallet Address:** [You need to create one]
+
+### Option B: Coinbase Commerce (Recommended)
+
+1. Sign up at https://commerce.coinbase.com/
+2. Create a charge for each pricing tier
+3. Add webhook endpoint to activate API keys
+
+```bash
+npm install @coinbase/coinbase-commerce-node
+```
+
+Example backend code (Node.js):
+```javascript
+const Commerce = require('@coinbase/coinbase-commerce-node');
+const Client = Commerce.Client;
+
+Client.init('YOUR_COINBASE_COMMERCE_API_KEY');
+
+// Create a charge
+const chargeData = {
+  name: 'Compute.io Starter Plan',
+  description: '50,000 API requests/month',
+  pricing_type: 'fixed_price',
+  local_price: {
+    amount: '29.00',
+    currency: 'USD'
+  }
+};
+
+const charge = await Charge.create(chargeData);
+console.log(charge.hosted_url); // Send user here to pay
+```
+
+### Option C: Smart Contract (Most Advanced)
+
+Deploy a simple payment contract on Base that:
+- Accepts USDC/ETH payments
+- Emits events when payment received
+- Your backend listens for events and activates API keys
+
+---
+
+## 🌐 Step 5: Deploy to Production
+
+### Deploy on Replit:
+
+1. Click "Deploy" button in top right
+2. Choose "Autoscale Deployment" (best for APIs)
+3. Configure:
+   - **Build Command:** `npm run build`
+   - **Start Command:** `npm run preview` (or your server command)
+   - **Port:** Usually 3000 or 5173
+
+4. Wait for deployment (2-5 minutes)
+
+### Set up custom domain:
+
+1. Purchase domain (Namecheap, Google Domains, etc.)
+2. In Replit deployment settings, add custom domain
+3. Update DNS records at your registrar:
+   ```
+   Type: CNAME
+   Name: @ (or www)
+   Value: [Your Replit deployment URL]
+   TTL: 3600
+   ```
+4. Wait for DNS propagation (5-60 minutes)
+
+---
+
+## ✅ Step 6: Essential Pre-Launch Checklist
+
+Before going live, verify:
+
+- [ ] API key placeholder in all code examples (no real keys exposed)
+- [ ] Terms page accessible at `/terms`
+- [ ] Privacy page accessible at `/privacy`
+- [ ] Pricing page accessible at `/pricing`
+- [ ] Footer has links to Terms and Privacy
+- [ ] Contact email in Terms/Privacy (replace [YOUR_EMAIL])
+- [ ] Your jurisdiction in Terms (replace [YOUR JURISDICTION])
+- [ ] Wallet connection works on Pricing page
+- [ ] Base network (Chain ID: 8453) is configured
+- [ ] Payment address is set (where users send crypto)
+- [ ] HTTPS works on all pages
+- [ ] Mobile responsive design tested
+- [ ] All internal links work (no 404s)
+
+---
+
+## 💳 Step 7: Payment Flow Implementation
+
+### What needs to happen for payment:
+
+1. **User clicks "Pay X USDC"**
+2. **Wallet connects** (MetaMask/Coinbase Wallet)
+3. **Switch to Base network** (if needed)
+4. **Send transaction:**
+   - For native ETH: Simple value transfer
+   - For USDC: ERC-20 transfer to your address
+5. **Wait for confirmation** (2-3 seconds on Base)
+6. **Verify transaction** on your backend
+7. **Generate and deliver API key**
+
+### USDC Contract on Base:
+```
+Address: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+```
+
+### Example USDC Transfer Code:
+```javascript
+// USDC contract ABI (just the transfer function)
+const usdcABI = [
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "_to", "address": "address" },
+      { "name": "_value", "uint256": "uint256" }
+    ],
+    "name": "transfer",
+    "outputs": [{ "name": "", "type": "bool" }],
+    "type": "function"
+  }
+];
+
+// Send USDC
+const web3 = new Web3(window.ethereum);
+const usdcContract = new web3.eth.Contract(
+  usdcABI, 
+  '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+);
+
+await usdcContract.methods
+  .transfer(
+    'YOUR_WALLET_ADDRESS',
+    web3.utils.toWei('29', 'mwei') // USDC has 6 decimals
+  )
+  .send({ from: userWalletAddress });
+```
+
+---
+
+## 🔑 Step 8: API Key Generation
+
+After payment is confirmed, you need to:
+
+1. Generate a unique API key
+2. Store it in your database with user info
+3. Send it to the user via email
+4. Display it in their dashboard
+
+### Example API Key Generation:
+```javascript
+import crypto from 'crypto';
+
+function generateApiKey() {
+  const prefix = 'sk_live_';
+  const random = crypto.randomBytes(32).toString('hex');
+  return prefix + random;
+}
+
+// Example: sk_live_a1b2c3d4e5f6...
+```
+
+---
+
+## 📧 Step 9: Email Setup
+
+Set up transactional emails for:
+- Welcome email (with API key)
+- Payment confirmation
+- Usage alerts
+
+**Recommended services:**
+- SendGrid (12k free emails/month)
+- Postmark (100 free emails/month)
+- AWS SES (very cheap)
+
+```bash
+npm install @sendgrid/mail
+```
+
+---
+
+## 🧪 Step 10: Test Before Launch
+
+### Test checklist:
+
+1. **Wallet connection:**
+   - Does MetaMask popup appear?
+   - Does it switch to Base correctly?
+   - Does it show connected address?
+
+2. **Payment flow:**
+   - Can you initiate a test transaction?
+   - Does it show in Basescan?
+   - Does API key get created?
+
+3. **All pages:**
+   - Load without errors
+   - Look good on mobile
+   - Links work
+
+4. **Security:**
+   - No API keys in client code
+   - No private keys stored
+   - HTTPS everywhere
+
+---
+
+## 🚦 Step 11: Go Live!
+
+Once everything is tested:
+
+1. Announce on social media (X/Twitter, LinkedIn)
+2. Post on relevant communities:
+   - r/MachineLearning
+   - r/ArtificialIntelligence
+   - Hacker News
+   - ProductHunt
+3. Email anyone who expressed interest
+4. Monitor for issues closely in first 24-48 hours
+
+---
+
+## 📝 Customize Placeholders
+
+Before deploying, find and replace these placeholders in the files:
+
+**In Terms.tsx:**
+- `[YOUR JURISDICTION]` → e.g., "Delaware, United States"
+- `[YOUR_EMAIL]` → Your actual email
+- Update copyright year if needed
+
+**In Privacy.tsx:**
+- `[YOUR COMPANY ADDRESS]` → Your business address
+- Update contact emails
+
+**In Pricing.tsx:**
+- Update pricing amounts if different
+- Add your actual payment contract/address
+
+---
+
+## 🆘 Troubleshooting
+
+### "Module not found" errors:
+```bash
+npm install react-router-dom
+```
+
+### Wallet not connecting:
+- Check if MetaMask is installed
+- Check if Base network is configured
+- Check browser console for errors
+
+### Styles not loading:
+- Make sure CSS files are imported in TSX files
+- Check file paths are correct
+
+### Payment not working:
+- Verify Base network (Chain ID: 8453)
+- Check USDC contract address
+- Ensure wallet has USDC balance
+- Check transaction on Basescan
+
+---
+
+## 📞 Need Help?
+
+If you get stuck:
+1. Check browser console for errors
+2. Check Replit logs
+3. Test wallet connection separately
+4. Verify Base network is accessible
+
+---
+
+## 🎉 You're Ready!
+
+Follow these steps in order, test thoroughly, and you'll have a production-ready API with crypto payments on Base.
+
+**Estimated time to deploy:** 2-4 hours (if familiar with React)
+
+Good luck with your launch! 🚀
