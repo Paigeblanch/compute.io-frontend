@@ -1,0 +1,228 @@
+# 🚀 Compute.io - Simple Launch Guide (Option C)
+
+## ✅ Everything Is Ready!
+
+I've updated all your files with your actual information:
+- **Base Wallet:** 0xB4ac8Da2C07a43f52CA04080348e1afadDe2A651
+- **Email:** paigeblanch09@gmail.com  
+- **Location:** California, United States
+
+---
+
+## 📦 Files You Need (3 pages):
+
+1. **Pricing-UPDATED.tsx** - Pricing page with your wallet address
+2. **Terms-UPDATED.tsx** - Terms of Service with your info
+3. **Privacy-UPDATED.tsx** - Privacy Policy with your info
+
+Plus the 3 CSS files (unchanged):
+4. **Pricing.css.txt** (rename to Pricing.css)
+5. **Terms.css.txt** (rename to Terms.css)
+6. **Privacy.css.txt** (rename to Privacy.css)
+
+---
+
+## 🎯 Deployment Options (Choose One)
+
+### **Option 1: Vercel (EASIEST - Recommended)**
+
+**Step 1:** Go to https://vercel.com and sign in with GitHub
+
+**Step 2:** Create new project or use existing
+
+**Step 3:** Upload these files to your project:
+```
+src/pages/
+├── Pricing.tsx (the UPDATED version)
+├── Pricing.css
+├── Terms.tsx (the UPDATED version)
+├── Terms.css
+├── Privacy.tsx (the UPDATED version)
+└── Privacy.css
+```
+
+**Step 4:** Add routes in your App.tsx:
+```typescript
+import Pricing from './pages/Pricing';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+
+// In your routes:
+<Route path="/pricing" element={<Pricing />} />
+<Route path="/terms" element={<Terms />} />
+<Route path="/privacy" element={<Privacy />} />
+```
+
+**Step 5:** Deploy! Vercel will give you a URL like: `compute-io.vercel.app`
+
+---
+
+### **Option 2: Keep Using Replit**
+
+If you want to stay in Replit for now:
+
+**Step 1:** In Replit, navigate to `client/src/pages/`
+
+**Step 2:** Replace the old files with the UPDATED versions:
+- Delete old `Pricing.tsx.txt`
+- Upload `Pricing-UPDATED.tsx` and rename to `Pricing.tsx`
+- Do the same for Terms and Privacy
+
+**Step 3:** Make sure CSS files are renamed (remove .txt)
+
+**Step 4:** Click "Publish" in Replit
+
+---
+
+## 💰 How Payments Work (Manual Process)
+
+### When a customer wants to pay:
+
+**Customer Journey:**
+1. Goes to `/pricing` page
+2. Clicks "Connect Wallet"
+3. Clicks "Pay 29 USDC" (or any tier)
+4. Transaction happens on Base network
+5. They get a transaction hash
+6. They email you: paigeblanch09@gmail.com with the hash
+
+**Your Process:**
+1. Check email for transaction hash
+2. Go to https://basescan.org
+3. Paste transaction hash to verify payment
+4. Confirm they sent correct amount to your wallet
+5. Generate API key for them (use your existing system)
+6. Email them the API key
+7. Done! 💰
+
+**Time:** ~5 minutes per customer
+
+---
+
+## 🔑 Generating API Keys
+
+You already have this working! When you get a payment, just:
+
+### Option A: Use your existing dashboard
+- Log into your admin panel
+- Create new API key for the user
+- Copy and email it to them
+
+### Option B: Run a command (if you have CLI)
+```bash
+# Whatever command you use to generate keys
+npm run create-api-key user@email.com
+```
+
+### Option C: Database directly
+```sql
+INSERT INTO api_keys (user_id, key, balance, active)
+VALUES (?, 'sk_live_...', 5.98, true);
+```
+
+---
+
+## 📧 Email Template for Customers
+
+**Subject:** Your Compute.io API Key - Ready to Use! 🚀
+
+```
+Hi [Customer Name],
+
+Thanks for your payment! Your API key is ready:
+
+API Key: sk_live_xxxxxxxxxxxxxxxxxxxxx
+
+Getting Started:
+1. Read the docs: [your-site]/docs
+2. Try the playground: [your-site]/playground
+3. View your dashboard: [your-site]/dashboard
+
+Your Plan:
+- Tier: Starter
+- Requests: 50,000/month
+- Support: Email us anytime
+
+Need help? Reply to this email!
+
+Best,
+Compute.io Team
+```
+
+---
+
+## ✅ Launch Checklist
+
+Before you go live:
+
+- [ ] All 3 pages deployed with your actual info
+- [ ] Pricing page has your wallet address
+- [ ] You can receive USDC on Base (test with $1)
+- [ ] You have a system to generate API keys
+- [ ] Your API backend is running
+- [ ] You can check transactions on Basescan
+- [ ] You have an email ready to respond to customers
+
+---
+
+## 🎉 You're Ready to Make Money!
+
+**To launch:**
+1. Deploy the pages (15 minutes)
+2. Tweet about it: "Launching Compute.io - deterministic math/physics API for AI agents. Pay with crypto on Base. [your-link]"
+3. Post on Reddit (r/MachineLearning, r/CryptoCurrency)
+4. Wait for first customer! 💰
+
+**First customer = validation!**
+
+Then we can automate everything (Option B) to scale.
+
+---
+
+## 🆘 Need Help?
+
+**Common issues:**
+
+**"Wallet not connecting"**
+- Make sure MetaMask/Coinbase Wallet installed
+- Check if Base network is added
+- Try refreshing page
+
+**"Transaction failed"**
+- User needs ETH on Base for gas (~$0.01)
+- Make sure they're on Base network, not Ethereum mainnet
+- Check they have enough USDC
+
+**"How do I verify payment?"**
+- Go to https://basescan.org
+- Paste transaction hash
+- Verify "To" address is yours: 0xB4ac8Da2C07a43f52CA04080348e1afadDe2A651
+- Verify amount matches tier price
+
+---
+
+## 💡 Tips for Success
+
+**Week 1:** Manual everything, learn what customers need
+
+**Week 2-3:** Get 5-10 paying customers, gather feedback
+
+**Week 4+:** Then we automate (Option B) - payment webhooks, auto API key generation, etc.
+
+Don't over-engineer! Get revenue first, optimize later.
+
+---
+
+## 🚀 Ready to Deploy?
+
+Everything is set up! Just:
+1. Deploy the UPDATED files
+2. Add routes to your app
+3. Test the payment flow yourself ($1 USDC)
+4. Go live!
+
+**You got this!** 💪
+
+---
+
+Questions? Just ask! Let's get you launched! 🎯
