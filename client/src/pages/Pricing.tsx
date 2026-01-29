@@ -96,13 +96,13 @@ export default function Pricing() {
       
       alert(`Payment initiated! Transaction hash: ${txHash}
 
-Please email this transaction hash to paigeblanch09@gmail.com to receive your API key.
+Please email this transaction hash to computeio.payments@gmail.com to receive your API key.
 
 Check your transaction on Basescan: https://basescan.org/tx/${txHash}`);
       
     } catch (error) {
       console.error('Transaction failed:', error);
-      alert('Payment failed. Please try again or contact paigeblanch09@gmail.com');
+      alert('Payment failed. Please try again or contact computeio.payments@gmail.com');
     }
   };
 
