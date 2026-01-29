@@ -262,6 +262,35 @@ Check your transaction on Basescan: https://basescan.org/tx/${txHash}`);
         </div>
       </div>
 
+{/* Manual Payment Instructions */}
+      <div className="manual-payment-section">
+        <h2>Or Send Payment Directly</h2>
+        <p>Prefer to send USDC manually? Send to our Base wallet:</p>
+        
+        <div className="wallet-display">
+          <code>{COMPUTE_IO_WALLET}</code>
+          <button 
+            className="copy-btn"
+            onClick={() => {
+              navigator.clipboard.writeText(COMPUTE_IO_WALLET);
+              alert('Address copied!');
+            }}
+          >
+            Copy
+          </button>
+        </div>
+
+        <div className="payment-instructions">
+          <h3>After Payment:</h3>
+          <ol>
+            <li>Send USDC on Base network to the address above</li>
+            <li>Email the transaction hash to: <strong>computeio.payments@gmail.com</strong></li>
+            <li>Include which tier you purchased</li>
+            <li>We'll send your API key within 24 hours</li>
+          </ol>
+        </div>
+      </div>
+
       {/* Pay-as-you-go option */}
       <div className="payg-section">
         <h2>Or Pay As You Go</h2>
@@ -282,30 +311,10 @@ Check your transaction on Basescan: https://basescan.org/tx/${txHash}`);
           </div>
         </div>
 
-        <button className="pricing-btn secondary">
-          Start with Pay-as-you-go
-        </button>
+        <a href="mailto:computeio.payments@gmail.com" className="pricing-btn secondary">
+          Contact for Pay-as-you-go
+        </a>
       </div>
-
-      {/* FAQ Section */}
-      <div className="faq-section">
-        <h2>Frequently Asked Questions</h2>
-        
-        <div className="faq-grid">
-          <div className="faq-item">
-            <h3>What cryptocurrencies do you accept?</h3>
-            <p>We accept USDC and ETH on the Base network. Base offers fast transactions with low fees (~$0.01).</p>
-          </div>
-
-          <div className="faq-item">
-            <h3>How do I connect my wallet?</h3>
-            <p>Click "Connect Wallet" and we'll guide you through connecting MetaMask or Coinbase Wallet. If you're not on Base network, we'll help you switch.</p>
-          </div>
-
-          <div className="faq-item">
-            <h3>What happens after payment?</h3>
-            <p>Once your transaction is confirmed on-chain (usually 2-3 seconds), your API key is automatically activated and usage credits are added to your account.</p>
-          </div>
 
           <div className="faq-item">
             <h3>Can I get a refund?</h3>
