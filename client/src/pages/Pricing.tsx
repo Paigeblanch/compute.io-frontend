@@ -5,7 +5,9 @@ export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<'free' | 'starter' | 'pro' | 'enterprise'>('starter');
   const [walletConnected, setWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState('');
-
+  const COMPUTE_IO_WALLET = '0xB4ac8Da2C07a43f52CA04080348e1afadDe2A651';
+  const USDC_BASE_CONTRACT = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
+  
   const connectWallet = async () => {
     // Check if wallet extension exists
     if (typeof window.ethereum !== 'undefined') {
@@ -60,40 +62,48 @@ export default function Pricing() {
     }
   };
 
-  const handlePurchase = async (tier: string, priceUSDC: number) => {
+ const handlePurchase = async (tier: string, priceUSDC: number) => {
     if (!walletConnected) {
       await connectWallet();
       return;
     }
 
-    // In production, you'd:
-    // 1. Create a payment request on your backend
-    // 2. Get the payment address and exact USDC amount
-    // 3. Initiate the transaction
-    // 4. Monitor the blockchain for confirmation
-    // 5. Activate the API key once payment is confirmed
-
-    alert(`Payment flow for ${tier} tier ($${priceUSDC} USDC) would be initiated here. This connects to your smart contract or payment processor.`);
-    
-    // Example transaction (you'll replace this with your actual payment logic)
-    /*
     try {
-      const tx = await window.ethereum.request({
+      // USDC has 6 decimals
+      const amount = (priceUSDC * 1000000).toString();
+      
+      // ERC-20 transfer function signature
+      const transferFunction = '0xa9059cbb'; // transfer(address,uint256)
+      
+      // Encode the recipient address (remove 0x and pad to 32 bytes)
+      const recipient = COMPUTE_IO_WALLET.slice(2).padStart(64, '0');
+      
+      // Encode the amount (pad to 32 bytes)
+      const amountHex = parseInt(amount).toString(16).padStart(64, '0');
+      
+      // Combine function signature + recipient + amount
+      const data = transferFunction + recipient + amountHex;
+
+      const txHash = await window.ethereum.request({
         method: 'eth_sendTransaction',
         params: [{
           from: walletAddress,
-          to: 'YOUR_PAYMENT_CONTRACT_ADDRESS', // Your Base contract or wallet
-          value: '0x0', // For USDC, value is 0 (we're calling the USDC contract)
-          data: 'ENCODED_USDC_TRANSFER_DATA', // Encoded USDC.transfer() call
+          to: USDC_BASE_CONTRACT,
+          value: '0x0', // No ETH value, we're calling USDC contract
+          data: data,
         }],
       });
       
-      console.log('Transaction hash:', tx);
-      // Monitor transaction and activate API key on confirmation
+      alert(`Payment initiated! Transaction hash: ${txHash}
+
+Please email this transaction hash to paigeblanch09@gmail.com to receive your API key.
+
+Check your transaction on Basescan: https://basescan.org/tx/${txHash}`);
+      
     } catch (error) {
       console.error('Transaction failed:', error);
+      alert('Payment failed. Please try again or contact paigeblanch09@gmail.com');
     }
-    */
   };
 
   return (
