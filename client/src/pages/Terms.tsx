@@ -7,7 +7,7 @@ export default function Terms() {
       <div className="terms-content">
         <header className="terms-header">
           <h1>Terms of Service</h1>
-          <p className="terms-updated">Last Updated: January 27, 2025</p>
+          <p className="terms-updated">Last Updated: January 29, 2026</p>
         </header>
 
         <section className="terms-section">
@@ -67,119 +67,4 @@ export default function Terms() {
           </p>
           <ul>
             <li>Keep your API keys secure and not share them with unauthorized parties</li>
-            <li>Notify us immediately of any unauthorized use of your account</li>
-            <li>Accept responsibility for all activities that occur under your account</li>
-          </ul>
-        </section>
-
-        <section className="terms-section">
-          <h2>6. Service Availability</h2>
-          <h3>Uptime Commitment</h3>
-          <p>
-            We strive to maintain 99.9% uptime but do not guarantee uninterrupted access. The Service may be temporarily unavailable due to maintenance, updates, or circumstances beyond our control.
-          </p>
-
-          <h3>Service Modifications</h3>
-          <p>
-            We reserve the right to modify, suspend, or discontinue any aspect of the Service at any time with reasonable notice to users.
-          </p>
-        </section>
-
-        <section className="terms-section">
-          <h2>7. Intellectual Property</h2>
-          <p>
-            The Service, including all content, features, and functionality, is owned by Compute.io and is protected by international copyright, trademark, and other intellectual property laws.
-          </p>
-
-          <h3>Your Content</h3>
-          <p>
-            You retain ownership of any data you submit to the Service. By using the Service, you grant us a limited license to process your requests and return computational results.
-          </p>
-        </section>
-
-        <section className="terms-section">
-          <h2>8. Limitation of Liability</h2>
-          <p>
-            <strong>IMPORTANT:</strong> To the maximum extent permitted by law, Compute.io shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from:
-          </p>
-          <ul>
-            <li>Your use or inability to use the Service</li>
-            <li>Any unauthorized access to or use of our servers and/or any personal information stored therein</li>
-            <li>Any computational errors or inaccuracies in results provided by the Service</li>
-            <li>Any bugs, viruses, or other harmful code that may be transmitted to or through the Service</li>
-          </ul>
-        </section>
-
-        <section className="terms-section">
-          <h2>9. Disclaimer of Warranties</h2>
-          <p>
-            The Service is provided "AS IS" and "AS AVAILABLE" without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not warrant that:
-          </p>
-          <ul>
-            <li>The Service will be uninterrupted, secure, or error-free</li>
-            <li>Computational results will be 100% accurate for all use cases</li>
-            <li>Any errors in the Service will be corrected</li>
-          </ul>
-        </section>
-
-        <section className="terms-section">
-          <h2>10. Indemnification</h2>
-          <p>
-            You agree to indemnify and hold harmless Compute.io, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising out of or related to your use of the Service or violation of these Terms.
-          </p>
-        </section>
-
-        <section className="terms-section">
-          <h2>11. Privacy</h2>
-          <p>
-            Your use of the Service is also governed by our Privacy Policy. Please review our Privacy Policy to understand how we collect, use, and protect your information.
-          </p>
-        </section>
-
-        <section className="terms-section">
-          <h2>12. Termination</h2>
-          <p>
-            We reserve the right to suspend or terminate your access to the Service at any time, with or without cause, with or without notice. Upon termination:
-          </p>
-          <ul>
-            <li>Your right to use the Service will immediately cease</li>
-            <li>You must cease all use of the Service and destroy any API keys</li>
-            <li>Any outstanding fees will become immediately due and payable</li>
-          </ul>
-        </section>
-
-        <section className="terms-section">
-          <h2>13. Governing Law</h2>
-          <p>
-            These Terms shall be governed by and construed in accordance with the laws of [YOUR JURISDICTION], without regard to its conflict of law provisions.
-          </p>
-        </section>
-
-        <section className="terms-section">
-          <h2>14. Changes to Terms</h2>
-          <p>
-            We reserve the right to modify these Terms at any time. We will notify users of material changes via email or through the Service. Your continued use of the Service after such modifications constitutes your acceptance of the updated Terms.
-          </p>
-        </section>
-
-        <section className="terms-section">
-          <h2>15. Contact Information</h2>
-          <p>
-            If you have any questions about these Terms, please contact us at:
-          </p>
-          <p className="contact-info">
-            <strong>Email:</strong> [YOUR_EMAIL]<br />
-            <strong>Support:</strong> support@compute.io<br />
-            <strong>Legal:</strong> legal@compute.io
-          </p>
-        </section>
-
-        <footer className="terms-footer">
-          <p>
-            By using Compute.io, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
-          </p>
-        </footer>
-      </div>
-    </div>
-  );
-}
+            <li>Notify us immediately of any unauthorized use of your acc
