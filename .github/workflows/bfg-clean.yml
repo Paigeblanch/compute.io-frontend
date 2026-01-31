@@ -10,14 +10,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: false   # we'll use our own PAT for pushes
+          persist-credentials: false
 
       - name: Install Java
         run: sudo apt-get update && sudo apt-get install -y openjdk-11-jre-headless wget
 
       - name: Download BFG
         run: |
-          wget -q -O bfg.jar "https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar"
+          wget -q -O /tmp/bfg.jar "https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar"
           java -version
 
       - name: Create secrets-to-remove file from repo secret
@@ -25,19 +25,16 @@ jobs:
           BFG_REPLACE_PATTERNS: ${{ secrets.BFG_REPLACE_PATTERNS }}
         run: |
           if [ -z "$BFG_REPLACE_PATTERNS" ]; then
-            echo "ERROR: Set repository secret BFG_REPLACE_PATTERNS (newline-separated patterns or exact tokens)"
+            echo "ERROR: Set repository secret BFG_REPLACE_PATTERNS"
             exit 1
           fi
-          # write patterns into file; newlines preserved
           printf "%b\n" "$BFG_REPLACE_PATTERNS" > secrets-to-remove.txt
-          echo "Wrote secrets-to-remove.txt:"
-          wc -l secrets-to-remove.txt && sed -n '1,20p' secrets-to-remove.txt | sed -n '1,20p'
+          wc -l secrets-to-remove.txt && sed -n '1,20p' secrets-to-remove.txt
 
       - name: Mirror clone into workdir (local mirror)
         run: |
           git config --global user.email "bfg-action@local"
           git config --global user.name "bfg-action"
-          # make a local mirror clone in /tmp/repo.git and operate there
           git clone --mirror . /tmp/repo-mirror.git
           cd /tmp/repo-mirror.git
           ls -la
@@ -45,8 +42,7 @@ jobs:
       - name: Run BFG to replace secrets
         run: |
           cd /tmp/repo-mirror.git
-          java -jar ../../bfg.jar --replace-text ../secrets-to-remove.txt .
-          # show what BFG changed (summary)
+          java -jar /tmp/bfg.jar --replace-text ../secrets-to-remove.txt .
           git reflog expire --expire=now --all || true
           git gc --prune=now --aggressive || true
 
@@ -55,12 +51,11 @@ jobs:
           BFG_PUSH_TOKEN: ${{ secrets.BFG_PUSH_TOKEN }}
         run: |
           if [ -z "$BFG_PUSH_TOKEN" ]; then
-            echo "ERROR: Set repository secret BFG_PUSH_TOKEN (personal access token with repo scope)"
+            echo "ERROR: Set repository secret BFG_PUSH_TOKEN"
             exit 1
           fi
           cd /tmp/repo-mirror.git
-          # replace origin URL to include the PAT for an authenticated push
           git remote set-url origin "https://x-access-token:${BFG_PUSH_TOKEN}@github.com/${{ github.repository }}.git"
-          # Force push all refs (branches + tags)
           git push --force --all origin
           git push --force --tags origin
+
