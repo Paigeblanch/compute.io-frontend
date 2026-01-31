@@ -228,12 +228,12 @@ A serverless API for AI agents that need reliable math & physics computations.
 ✓ Pay with crypto on @base
 ✓ 99.9% uptime
 
-Start free: [your-domain.com]
+Start free: https://agentcomputehub.com/
 ```
 
 **ProductHunt:**
 ```
-Offload heavy compute from your LLM
+Offload heavy compu                                                                                                  te from your LLM
 
 Compute.io is a pay-per-request API designed for autonomous agents. Get reliable, deterministic results for math and physics problems without the LLM overhead.
 
